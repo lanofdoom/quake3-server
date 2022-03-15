@@ -9,12 +9,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            /tmp/bazel-cache
-          key: ${{ runner.os }}-bazelcache-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-bazelcache-
       - name: Build image
         run: bazelisk build --disk_cache=/tmp/bazel-cache -c opt //:server_image.tar
       - name: Log into registry
