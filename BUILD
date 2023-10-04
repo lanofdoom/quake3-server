@@ -1,31 +1,36 @@
-load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_layer")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
 
-cc_image(
-    name = "io3ded_image",
-    binary = "@ioquake3//:ioq3ded",
+pkg_tar(
+    name = "bin",
+    srcs = ["@ioquake3//:ioq3ded"],
+    package_dir = "/app",
 )
 
-container_layer(
-    name = "baseq3_layer",
-    directory = "/app/baseq3",
-    files = [
-        "@baseq3_pak0pk3//file",
-        "@baseq3_pak1pk3//file",
-        "@baseq3_pak2pk3//file",
-        "@baseq3_pak3pk3//file",
-        "@baseq3_pak4pk3//file",
-        "@baseq3_pak5pk3//file",
-        "@baseq3_pak6pk3//file",
-        "@baseq3_pak7pk3//file",
-        "@baseq3_pak8pk3//file",
+pkg_tar(
+    name = "baseq3",
+    srcs = ["@baseq3_full//:files"],
+    package_dir = "/app/baseq3",
+)
+
+oci_image(
+    name = "image",
+    #architecture = select({
+    #    "@platforms//cpu:arm64": "arm64",
+    #    "@platforms//cpu:x86_64": "amd64",
+    #}),
+    base = "@distroless_base",
+    entrypoint = ["/app/ioq3ded"],
+    #os = "linux",
+    tars = [
+        ":baseq3",
+        ":bin",
     ],
 )
 
-container_image(
-    name = "server_image",
-    base = "io3ded_image",
-    layers = [
-        ":baseq3_layer",
-    ],
+oci_push(
+    name = "image_push",
+    image = ":image",
+    remote_tags = ["latest"],
+    repository = "ghcr.io/lanofdoom/quake3-server",
 )

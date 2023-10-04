@@ -137,6 +137,7 @@ cc_binary(
         "code/zlib/zutil.h",
     ],
     copts = ["-Wno-return-type"],
+    includes    = ["code/zlib"],
     defines = [
         "ARCH_STRING=\\\"x86_64\\\"",
         "BOTLIB",

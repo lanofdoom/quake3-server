@@ -1,0 +1,18 @@
+bazel_dep(name = "rules_oci", version = "1.4.0")
+bazel_dep(name = "rules_pkg", version = "0.9.1")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_base",
+    digest = "sha256:396891e37c26c8ea032aef368c806f64c950d19cc578fdab2b0093710a036895",
+    image = "gcr.io/distroless/cc",
+    platforms = ["linux/amd64"],
+)
+use_repo(oci, "distroless_base")
+
+repos = use_extension("//:deps.bzl", "repos_bzlmod")
+use_repo(
+    repos,
+    "ioquake3",
+    "baseq3_full",
+)
