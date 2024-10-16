@@ -1,7 +1,6 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
     "features": {
-        "ghcr.io/balazs23/devcontainers-features/bazel:1": {}
+        "ghcr.io/devcontainers-community/features/bazel:1": {}
     },
     "customizations": {
         "vscode": {
@@ -11,5 +10,4 @@
             ]
         }
     },
-    "onCreateCommand": "go install github.com/bazelbuild/buildtools/buildifier@latest"
 }
