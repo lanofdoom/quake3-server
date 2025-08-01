@@ -36,9 +36,9 @@ def _module_impl(bzlmod = False):
     http_archive(
         name = "ioquake3",
         build_file = "@//:ioquake3.BUILD",
-        sha256 = "d5174dd31885e58d530df8199a7c5808e1ec181aec3e8c8f0e94cff6b4cd4cb6",
-        strip_prefix = "ioq3-ab18167a09415e9e9f4859c197bad72ec39807d5",
-        urls = ["https://github.com/ioquake/ioq3/archive/ab18167a09415e9e9f4859c197bad72ec39807d5.zip"],
+        sha256 = "72744cc58f80e14467292ee4b6e99dba1c735ebe409e51379fab26749e58fbff",
+        strip_prefix = "ioq3-cb11c5e339bc5946157ac07717a72c69a7aab42b",
+        urls = ["https://github.com/ioquake/ioq3/archive/cb11c5e339bc5946157ac07717a72c69a7aab42b.zip"],
     )
     baseq3_repo(
         name = "baseq3_full",
